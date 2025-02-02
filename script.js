@@ -75,3 +75,8 @@ nextBtn.addEventListener("click", () => {
   slideElements[activeIndex].classList.add("active");
   navDotElements[activeIndex].classList.add("active");
 });
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
