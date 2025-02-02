@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+    --width-df: min(1200px, 90vw);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #000;
+}
+
+#slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    color: white;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+
+    h2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 10rem;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.image,
+.image::before,
+.image::after {
+    background-image: var(--url);
+    background-position: center;
+    background-size: var(--diameter) var(--diameter);
+    border-radius: 50%;
+}
+
+.image {
+    position: relative;
+    flex-shrink: 0;
+    width: var(--diameter);
+    height: var(--diameter);
+}
+
+.image::before,
+.image::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.image::before {
+    background-image: linear-gradient(to right, #0004, #0004), var(--url);
+}
+
+.image::after {
+    width: 30%;
+    height: 30%;
+}
+
+/* Animation */
+/* Slide before active slide */
+.slide {
+    user-select: none;
+    opacity: 0;
+    transition: opacity 1s;
+
+    h2 {
+        top: 0;
+        transition: top 1s;
+    }
+}
+
+.image {
+    transform: translate(-50%, -50%) rotate(-60deg);
+    filter: blur(30px);
+    transition: transform 1s, filter 1s;
+}
+
+.image::before,
+.image::after {
+    transition: transform 1s;
+}
+
+.image::before {
+    transform: translate(-50%, -50%) rotate(-120deg);
+}
+
+.image::after {
+    transform: translate(-50%, -50%) rotate(-180deg);
+}
+
+/* Active Slide */
+.slide.active {
+    opacity: 1;
+
+    h2 {
+        top: 50%;
+    }
+
+    .image {
+        transform: rotate(0);
+        filter: blur(0);
+    }
+
+    .image::before,
+    .image::after {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+}
+
+/* Slide after active slide */
+.slide.active ~ .slide {
+    opacity: 0;
+
+    h2 {
+        top: 100%;
+    }
+
+    .image {
+        transform: rotate(60deg);
+        filter: blur(30px);
+    }
+
+    .image::before {
+        transform: translate(-50%, -50%) rotate(120deg);
+    }
+
+    .image::after {
+        transform: translate(-50%, -50%) rotate(180deg);
+    }
+}
+
+/* Arrows */
+#arrows {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: var(--width-df);
+    padding: 10px 20px;
+    transform: translateX(-50%);
+
+    button {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background-color: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #fff4;
+    }
+}
+
+#nav-dots {
+    display: flex;
+    gap: 10px;
+    font-size: 5px;
+    color: #fff8;
+
+    .active {
+        color: #fff;
+    }
+}
