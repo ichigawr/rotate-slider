@@ -63,6 +63,8 @@ prevBtn.addEventListener("click", () => {
 
   slideElements[activeIndex].classList.add("active");
   navDotElements[activeIndex].classList.add("active");
+
+  startAutoSlide();
 });
 
 nextBtn.addEventListener("click", () => {
@@ -74,9 +76,20 @@ nextBtn.addEventListener("click", () => {
 
   slideElements[activeIndex].classList.add("active");
   navDotElements[activeIndex].classList.add("active");
+
+  startAutoSlide();
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") prevBtn.click();
   else if (e.key === "ArrowRight") nextBtn.click();
 });
+
+let autoSlideInterval;
+
+const startAutoSlide = () => {
+  clearInterval(autoSlideInterval);
+  autoSlideInterval = setInterval(() => nextBtn.click(), 3000);
+};
+
+startAutoSlide();
