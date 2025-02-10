@@ -168,6 +168,7 @@ body {
         border: none;
         background-color: transparent;
         border-radius: 50%;
+        transition: background-color 0.3s;
         cursor: pointer;
     }
 
@@ -178,11 +179,34 @@ body {
 
 #nav-dots {
     display: flex;
+    align-items: center;
     gap: 10px;
-    font-size: 5px;
-    color: #fff8;
+
+    i {
+        position: relative;
+        font-size: 5px;
+        color: #fff8;
+        transition: font-size 0.3s, color 0.3s;
+    }
+
+    i::after {
+        content: var(--content);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0;
+        color: transparent;
+        transition: font-size 0.3s, color 0.3s;
+    }
 
     .active {
+        font-size: 22px;
         color: #fff;
+    }
+
+    .active::after {
+        font-size: 14px;
+        color: #3e3e3e;
     }
 }

@@ -22,17 +22,26 @@ const slidesData = [
 const slides = document.getElementById("slides");
 const navDots = document.getElementById("nav-dots");
 
-slidesData.forEach(({ image, title }) => {
-  const slideElement = document.createElement("div");
-  slideElement.classList.add("slide");
-  slideElement.innerHTML = `
-    <div class="image" style="--url: url('${image}')"></div>
-    <h2>${title}</h2>
-  `;
-  slides.appendChild(slideElement);
+const renderSlides = (slidesData) => {
+  if (!Array.isArray(slidesData) || slidesData.length === 0) {
+    slides.innerHTML = `<p>No slides to show</p>`;
+    return;
+  }
 
-  navDots.innerHTML += `<i class="fa-solid fa-circle"></i>`;
-});
+  slidesData.forEach(({ image, title }) => {
+    const slideElement = document.createElement("div");
+    slideElement.classList.add("slide");
+    slideElement.innerHTML = `
+      <div class="image" style="--url: url('${image}')"></div>
+      <h2>${title}</h2>
+    `;
+    slides.appendChild(slideElement);
+
+    navDots.innerHTML += `<i class="fa-solid fa-circle"></i>`;
+  });
+};
+
+renderSlides(slidesData);
 
 const setDiameter = () => {
   const slider = document.getElementById("slider");
@@ -47,9 +56,14 @@ setDiameter();
 window.addEventListener("resize", setDiameter);
 
 const slideElements = document.getElementsByClassName("slide");
-const navDotElements = document.getElementsByClassName("fa-solid fa-circle");
+const navDotElements = navDots.getElementsByClassName("fa-solid fa-circle");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
+
+Array.from(navDotElements).forEach((navDot, index) => {
+  navDot.style.setProperty("--content", `"${index + 1}"`);
+});
+
 let activeIndex = 0;
 slideElements[activeIndex].classList.add("active");
 navDotElements[activeIndex].classList.add("active");
